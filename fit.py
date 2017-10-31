@@ -4,7 +4,8 @@ import sys
 
 m = Model()
 
-features = sys.argv[2].split(',')
+inputs = sys.argv[2].split(';')
+features = (e.split(',') for e in inputs)
 
-labels = m.fit(sys.argv[1], [features])
+labels = m.fit(sys.argv[1], features)
 sys.stdout.write(','.join(str(e) for e in labels[0]))
