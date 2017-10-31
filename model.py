@@ -16,7 +16,7 @@ class Model:
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/gpu:0'):
+        with tf.device('/cpu:0'):
             weights = {
                 'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
                 'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
@@ -41,7 +41,7 @@ class Model:
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/gpu:0'):
+        with tf.device('/cpu:0'):
             weights = {
                 'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
                 'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
@@ -67,7 +67,7 @@ class Model:
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/gpu:0'):
+        with tf.device('/cpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
@@ -106,7 +106,7 @@ class Model:
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/gpu:0'):
+        with tf.device('/cpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
