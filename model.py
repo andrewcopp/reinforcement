@@ -14,10 +14,17 @@ class Model:
 
         n_inputs = 301
         n_outputs = 1
+        n_hidden_layer = 256
 
         with tf.device('/gpu:0'):
-            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-            biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = {
+                'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
+                'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
+            }
+            biases = {
+                'hidden_layer': tf.Variable(tf.zeros([n_hidden_layer])),
+                'out': tf.Variable(tf.zeros([n_outputs]))
+            }
 
         init = tf.global_variables_initializer()
 
@@ -32,10 +39,17 @@ class Model:
 
         n_inputs = 301
         n_outputs = 1
+        n_hidden_layer = 256
 
         with tf.device('/gpu:0'):
-            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-            biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = {
+                'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
+                'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
+            }
+            biases = {
+                'hidden_layer': tf.Variable(tf.zeros([n_hidden_layer])),
+                'out': tf.Variable(tf.zeros([n_outputs]))
+            }
 
         saver = tf.train.Saver()
 
@@ -51,15 +65,26 @@ class Model:
         learning_rate = 0.01
         n_inputs = 301
         n_outputs = 1
+        n_hidden_layer = 256
 
         with tf.device('/gpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
-            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-            biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = {
+                'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
+                'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
+            }
+            biases = {
+                'hidden_layer': tf.Variable(tf.zeros([n_hidden_layer])),
+                'out': tf.Variable(tf.zeros([n_outputs]))
+            }
 
-            logits = tf.add(tf.matmul(features, weights), biases)
+            layer_1 = tf.add(tf.matmul(features, weights['hidden_layer']), biases['hidden_layer'])
+            layer_1 = tf.nn.relu(layer_1)
+
+            logits = tf.add(tf.matmul(layer_1, weights['out']), biases['out'])
+            logits = tf.nn.sigmoid(logits)
 
             cost = tf.reduce_sum(tf.pow(logits-labels, 2))/(2*1)
             optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
@@ -79,15 +104,26 @@ class Model:
 
         n_inputs = 301
         n_outputs = 1
+        n_hidden_layer = 256
 
         with tf.device('/gpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
-            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-            biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = {
+                'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
+                'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
+            }
+            biases = {
+                'hidden_layer': tf.Variable(tf.zeros([n_hidden_layer])),
+                'out': tf.Variable(tf.zeros([n_outputs]))
+            }
 
-            logits = tf.add(tf.matmul(features, weights), biases)
+            layer_1 = tf.add(tf.matmul(features, weights['hidden_layer']), biases['hidden_layer'])
+            layer_1 = tf.nn.relu(layer_1)
+
+            logits = tf.add(tf.matmul(layer_1, weights['out']), biases['out'])
+            logits = tf.nn.sigmoid(logits)
 
         saver = tf.train.Saver()
 
