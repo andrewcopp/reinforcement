@@ -84,7 +84,7 @@ class Model:
             layer_1 = tf.nn.relu(layer_1)
 
             logits = tf.add(tf.matmul(layer_1, weights['out']), biases['out'])
-            logits = tf.nn.tanh(logits)
+            logits = tf.nn.sigmoid(logits)
 
             cost = tf.reduce_sum(tf.pow(logits-labels, 2))/(2*1)
             optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
@@ -123,7 +123,7 @@ class Model:
             layer_1 = tf.nn.relu(layer_1)
 
             logits = tf.add(tf.matmul(layer_1, weights['out']), biases['out'])
-            logits = tf.nn.tanh(logits)
+            logits = tf.nn.sigmoid(logits)
 
         saver = tf.train.Saver()
 
