@@ -9,13 +9,15 @@ class Model:
         self.epsilon = 0.01
 
     def initialize(self, outfile):
+
         tf.reset_default_graph()
 
         n_inputs = 301
         n_outputs = 1
 
-        weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-        biases = tf.Variable(tf.zeros([n_outputs]))
+        with tf.device('/gpu:0'):
+            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
+            biases = tf.Variable(tf.zeros([n_outputs]))
 
         init = tf.global_variables_initializer()
 
@@ -27,11 +29,13 @@ class Model:
             saver.save(sess, outfile)
 
     def transfer(self, infile, outfile):
+
         n_inputs = 301
         n_outputs = 1
 
-        weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-        biases = tf.Variable(tf.zeros([n_outputs]))
+        with tf.device('/gpu:0'):
+            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
+            biases = tf.Variable(tf.zeros([n_outputs]))
 
         saver = tf.train.Saver()
 
@@ -48,16 +52,17 @@ class Model:
         n_inputs = 301
         n_outputs = 1
 
-        features = tf.placeholder(tf.float32, [None, n_inputs])
-        labels = tf.placeholder(tf.float32, [None, n_outputs])
+        with tf.device('/gpu:0'):
+            features = tf.placeholder(tf.float32, [None, n_inputs])
+            labels = tf.placeholder(tf.float32, [None, n_outputs])
 
-        weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-        biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
+            biases = tf.Variable(tf.zeros([n_outputs]))
 
-        logits = tf.add(tf.matmul(features, weights), biases)
+            logits = tf.add(tf.matmul(features, weights), biases)
 
-        cost = tf.reduce_sum(tf.pow(logits-labels, 2))/(2*1)
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
+            cost = tf.reduce_sum(tf.pow(logits-labels, 2))/(2*1)
+            optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
 
         saver = tf.train.Saver()
 
@@ -69,18 +74,20 @@ class Model:
             saver.save(sess, outfile)
 
     def fit(self, infile, inputs):
+
         tf.reset_default_graph()
 
         n_inputs = 301
         n_outputs = 1
 
-        features = tf.placeholder(tf.float32, [None, n_inputs])
-        labels = tf.placeholder(tf.float32, [None, n_outputs])
+        with tf.device('/gpu:0'):
+            features = tf.placeholder(tf.float32, [None, n_inputs])
+            labels = tf.placeholder(tf.float32, [None, n_outputs])
 
-        weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
-        biases = tf.Variable(tf.zeros([n_outputs]))
+            weights = tf.Variable(tf.truncated_normal([n_inputs, n_outputs]))
+            biases = tf.Variable(tf.zeros([n_outputs]))
 
-        logits = tf.add(tf.matmul(features, weights), biases)
+            logits = tf.add(tf.matmul(features, weights), biases)
 
         saver = tf.train.Saver()
 
