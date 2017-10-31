@@ -12,11 +12,11 @@ class Model:
 
         tf.reset_default_graph()
 
-        n_inputs = 2
+        n_inputs = 301
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/cpu:0'):
+        with tf.device('/gpu:0'):
             weights = {
                 'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
                 'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
@@ -37,11 +37,11 @@ class Model:
 
     def transfer(self, infile, outfile):
 
-        n_inputs = 2
+        n_inputs = 301
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/cpu:0'):
+        with tf.device('/gpu:0'):
             weights = {
                 'hidden_layer': tf.Variable(tf.truncated_normal([n_inputs, n_hidden_layer])),
                 'out': tf.Variable(tf.truncated_normal([n_hidden_layer, n_outputs]))
@@ -63,11 +63,11 @@ class Model:
         tf.reset_default_graph()
 
         learning_rate = 0.01
-        n_inputs = 2
+        n_inputs = 301
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/cpu:0'):
+        with tf.device('/gpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
@@ -102,11 +102,11 @@ class Model:
 
         tf.reset_default_graph()
 
-        n_inputs = 2
+        n_inputs = 301
         n_outputs = 1
         n_hidden_layer = 256
 
-        with tf.device('/cpu:0'):
+        with tf.device('/gpu:0'):
             features = tf.placeholder(tf.float32, [None, n_inputs])
             labels = tf.placeholder(tf.float32, [None, n_outputs])
 
